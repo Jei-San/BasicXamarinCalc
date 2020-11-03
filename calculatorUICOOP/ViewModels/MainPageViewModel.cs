@@ -1,11 +1,20 @@
 ﻿using BasicXamarinCalc.Static;
 using calculatorUICOOP.Models;
+using System.ComponentModel;
 
 namespace calculatorUICOOP.ViewModels
 {
-    public class MainPageViewModel
+    public class MainPageViewModel : INotifyPropertyChanged
     {
-        public Expression exp;  // Mathmatical expression that contains the variables and operator
+        private Expression exp;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Expression Exp 
+        { 
+            get => exp;
+            set { exp = value; OnPropertyChanged(nameof(Exp)); }
+        }  // Mathmatical expression that contains the variables and operator
 
         public MainPageViewModel()
         {
@@ -21,32 +30,37 @@ namespace calculatorUICOOP.ViewModels
             string output;  // Text to populate Display Label with
             decimal result; // Numberical result of math expression being evaluated
 
-            switch (exp.Operator)
+            switch (Exp.Operator)
             {
                 case Operator.Add:
-                    result = Math.Add(exp.X, exp.Y);
+                    result = Math.Add(Exp.X, Exp.Y);
                     break;
                 case Operator.Subtract:
-                    result = Math.Subtract(exp.X, exp.Y);
+                    result = Math.Subtract(Exp.X, Exp.Y);
                     break;
                 case Operator.Multiply:
-                    result = Math.Multiply(exp.X, exp.Y);
+                    result = Math.Multiply(Exp.X, Exp.Y);
                     break;
                 case Operator.Divide:
-                    result = Math.Divide(exp.X, exp.Y);
+                    result = Math.Divide(Exp.X, Exp.Y);
                     break;
                 default:
                     return "No operator";
             }
 
-            exp.X = result;
+            Exp.X = result;
             output = $"{result}";
             return output;
         }
 
         public void Reset()
         {
-            exp = new Expression();
+            Exp = new Expression();
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

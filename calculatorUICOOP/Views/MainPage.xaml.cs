@@ -3,11 +3,8 @@ using calculatorUICOOP.Models;
 using calculatorUICOOP.Static;
 using calculatorUICOOP.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace calculatorUICOOP
@@ -24,7 +21,8 @@ namespace calculatorUICOOP
         public MainPage()
         {
             InitializeComponent();
-            _vm = ViewModelFactory.GetMainPageViewModel();
+            // _vm = ViewModelFactory.GetMainPageViewModel();
+            _vm = ViewModelFactory.GetViewModel<MainPageViewModel>();
         }
 
         #region Event Handlers
@@ -79,7 +77,7 @@ namespace calculatorUICOOP
             }
 
             ResetDisplay();
-            _vm.exp.Operator = op;
+            _vm.Exp.Operator = op;
             onSecond = true;
         }
 
@@ -128,9 +126,9 @@ namespace calculatorUICOOP
         private void UpdateValue(decimal num)
         {
             if (onSecond)
-                _vm.exp.Y = num;
+                _vm.Exp.Y = num;
             else
-                _vm.exp.X = num;
+                _vm.Exp.X = num;
         }
 
         /// <summary>
@@ -145,9 +143,9 @@ namespace calculatorUICOOP
         private void DisplayCurrentValue()
         {
             if (onSecond)
-                DisplayLabel.Text = $"{_vm.exp.Y}";
+                DisplayLabel.Text = $"{_vm.Exp.Y}";
             else
-                DisplayLabel.Text = $"{_vm.exp.X}";
+                DisplayLabel.Text = $"{_vm.Exp.X}";
         }
     }
 }

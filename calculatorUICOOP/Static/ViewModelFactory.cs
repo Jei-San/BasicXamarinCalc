@@ -1,6 +1,7 @@
 ﻿using calculatorUICOOP.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace calculatorUICOOP.Static
@@ -13,5 +14,8 @@ namespace calculatorUICOOP.Static
     {
         public static MainPageViewModel GetMainPageViewModel() =>
             new MainPageViewModel();
+
+        public static TViewModel GetViewModel<TViewModel>() where TViewModel : INotifyPropertyChanged, new() =>
+            new TViewModel();
     }
 }
